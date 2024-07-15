@@ -1,4 +1,10 @@
 <template>
-  <main style="justify-content: center"><h1>Admin Panel STG</h1></main>
+  <main><h1>Service App STG</h1></main>
 </template>
-<script setup></script>
+<script>
+export default {
+  created() {
+    this.$store.dispatch("getAllServices");
+  },
+};
+</script>
