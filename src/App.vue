@@ -1,14 +1,17 @@
 <template>
   <div>
     <a-layout
-      ><a-layout-header class="header" style="display: flex">
+      ><a-layout-header class="header">
         <a-menu theme="dark" mode="horizontal">
-          <a-menu-item key="1" :class="selectedTab('/register')">
-            <router-link to="/register">Register </router-link>
-          </a-menu-item>
-          <a-menu-item key="2" :class="selectedTab('/about')">
-            <router-link to="/about">About </router-link></a-menu-item
+          <a-menu-item
+            v-for="route in routes"
+            :key="route.path"
+            :class="selectedTab(route.path)"
           >
+            <router-link :to="route.path" style="text-transform: capitalize"
+              >{{ route.name }}
+            </router-link>
+          </a-menu-item>
         </a-menu> </a-layout-header
       ><a-layout-content style="padding: 0 50px">
         <RouterView /> </a-layout-content
@@ -21,6 +24,7 @@ export default {
   data() {
     return {
       path: this.$route.path,
+      routes: this.$router.getRoutes(),
     };
   },
   methods: {
@@ -33,9 +37,6 @@ export default {
     "$route.path"(newPath) {
       this.path = newPath;
     },
-  },
-  created() {
-    console.log("kazim", this.path);
   },
 };
 </script>

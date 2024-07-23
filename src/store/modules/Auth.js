@@ -13,7 +13,6 @@ export default {
       localStorage.removeItem("user");
     },
     setError(state, { error, showError = true, callback = () => {} }) {
-      console.log("kazim error", error);
       if (error !== undefined) state.error = error;
       else state.error = "Server not responding";
       if (showError && state.error)
@@ -35,6 +34,17 @@ export default {
       try {
         commit("setError", { error: null });
         let res = await ApiService.post("/api/v1/auth/admin/signup", payload);
+        commit("setUser", res);
+      } catch (err) {
+        commit("setError", {
+          error: err.response?.data?.message || undefined,
+        });
+      }
+    },
+    async logIn({ commit }, payload) {
+      try {
+        commit("setError", { error: null });
+        let res = await ApiService.post("/api/v1/auth/admin/login", payload);
         commit("setUser", res);
       } catch (err) {
         commit("setError", {

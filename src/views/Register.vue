@@ -46,13 +46,13 @@
               message: 'Please input your password!',
             },
             {
-              validator: (rule, value, promise) => {
+              validator: (rule, value, callback) => {
                 if (value.length > 0 && value.length < 6) {
-                  promise(
+                  callback(
                     new Error('Password must be at least 6 characters long!')
                   );
                 } else {
-                  promise();
+                  callback();
                 }
               },
             },
