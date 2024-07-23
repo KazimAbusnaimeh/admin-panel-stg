@@ -10,22 +10,32 @@
             <router-link to="/about">About </router-link></a-menu-item
           >
         </a-menu> </a-layout-header
-      ><a-layout-content style="padding: 0 50px"
-        ><RouterView /></a-layout-content
+      ><a-layout-content style="padding: 0 50px">
+        <RouterView /> </a-layout-content
     ></a-layout>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      path: this.$route.path,
+    };
+  },
   methods: {
     selectedTab(path) {
       if (this.$route.path == path) return "ant-menu-item-selected";
       else return "";
     },
   },
+  watch: {
+    "$route.path"(newPath) {
+      this.path = newPath;
+    },
+  },
   created() {
-    console.log("kazim", this.$route.path);
+    console.log("kazim", this.path);
   },
 };
 </script>
