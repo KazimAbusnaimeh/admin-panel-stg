@@ -46,6 +46,12 @@
           v-model:value="form.password"
         />
       </a-form-item>
+      <a-button
+        type="link"
+        style="margin-top: -10px !important; padding: 0 !important"
+      >
+        <router-link to="/register">Register</router-link></a-button
+      >
       <a-form-item style="text-align: center">
         <a-button type="primary" html-type="submit" :loading="submitLoading">
           {{ submitLoading ? "Loading" : "Submit" }}

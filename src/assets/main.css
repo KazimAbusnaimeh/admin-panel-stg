@@ -1,11 +1,2 @@
 @import "./base.css";
-.ant-layout {
-  min-height: 100vh;
-}
-
-h1 {
-  text-transform: capitalize;
-  font-size: 28px;
-  font-weight: 650;
-  color: black;
-}
+@import "./_override.scss";

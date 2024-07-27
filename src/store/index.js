@@ -1,12 +1,12 @@
 // src/store/index.js
 import { createStore } from "vuex";
-import ServiceModule from "./modules/ServiceModule";
 import Auth from "./modules/Auth";
+import Story from "./modules/Story";
 
 const store = createStore({
   modules: {
-    ServiceModule,
     Auth,
+    Story,
   },
 });
 

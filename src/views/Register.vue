@@ -90,6 +90,12 @@
             v-model:value="form.password_confirm"
           />
         </a-form-item>
+        <a-button
+          type="link"
+          style="margin-top: -10px !important; padding: 0 !important"
+        >
+          <router-link to="/log-in">Log In</router-link></a-button
+        >
         <a-form-item style="margin-top: 10px; width: 100%; text-align: center">
           <a-button type="primary" html-type="submit" :loading="submitLoading">
             {{ submitLoading ? "Loading" : "Submit" }}

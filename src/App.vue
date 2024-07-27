@@ -1,21 +1,23 @@
 <template>
   <div>
-    <a-layout
-      ><a-layout-header class="header">
-        <a-menu theme="dark" mode="horizontal">
+    <a-layout>
+      <a-layout-header class="header">
+        <a-menu theme="dark" mode="horizontal" :selectedKeys="[path]">
           <a-menu-item
             v-for="route in routes"
             :key="route.path"
             :class="selectedTab(route.path)"
           >
-            <router-link :to="route.path" style="text-transform: capitalize"
-              >{{ route.name }}
+            <router-link :to="route.path" style="text-transform: capitalize">
+              {{ route.name }}
             </router-link>
           </a-menu-item>
-        </a-menu> </a-layout-header
-      ><a-layout-content style="padding: 0 50px">
-        <RouterView /> </a-layout-content
-    ></a-layout>
+        </a-menu>
+      </a-layout-header>
+      <a-layout-content class="content-layout">
+        <RouterView />
+      </a-layout-content>
+    </a-layout>
   </div>
 </template>
 
@@ -29,8 +31,7 @@ export default {
   },
   methods: {
     selectedTab(path) {
-      if (this.$route.path == path) return "ant-menu-item-selected";
-      else return "";
+      return this.$route.path === path ? "ant-menu-item-selected" : "";
     },
   },
   watch: {
@@ -41,4 +42,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.content-layout {
+  padding: 0 50px;
+}
+@media (max-width: 600px) {
+  .content-layout {
+    padding: 0 10px;
+  }
+}
+</style>
