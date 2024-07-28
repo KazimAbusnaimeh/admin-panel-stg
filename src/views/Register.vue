@@ -76,29 +76,30 @@
               <UploadOutlined style="font-size: 20px" />Upload file
             </a-button>
           </a-upload>
-          <div v-if="userImage.length" style="margin-top: 10px">
-            <div style="width: 400px; height: 400px">
-              <img
-                :src="imagePreview"
-                style="object-fit: fill; width: 100%; height: 100%"
-              />
-            </div>
-            <div
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              "
-            >
+          <div v-if="isImageCroped" class="image-preview-container">
+            <img :src="imagePreview" alt="img" class="preview-image" />
+            <div class="d-flex ai-center jc-space-between">
               <p>{{ userImage[0].name }}</p>
               <a-button
                 @click="handleRemove(userImage[0])"
                 style="margin-top: 10px"
-                >Remove file</a-button
+                >Remove Image</a-button
               >
             </div>
           </div>
         </a-form-item>
+        <a-modal
+          v-model:open="showCropModal"
+          :maskClosable="false"
+          @ok="handleImageCropped"
+        >
+          <cropper
+            :src="imagePreview"
+            ref="cropper"
+            :stencil-props="{ aspectRatio: 1 }"
+            @change="onCrop"
+          ></cropper
+        ></a-modal>
         <div style="text-align: right">
           <a-button
             type="link"
@@ -120,9 +121,11 @@
 <script>
 import { nameValidateError, inputName } from "../utils/Extentions";
 import { UploadOutlined } from "@ant-design/icons-vue";
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
 
 export default {
-  components: { UploadOutlined },
+  components: { Cropper, UploadOutlined },
   data() {
     return {
       submitLoading: false,
@@ -134,6 +137,8 @@ export default {
       },
       userImage: [],
       imagePreview: "",
+      showCropModal: false,
+      isImageCroped: false,
     };
   },
   methods: {
@@ -158,6 +163,8 @@ export default {
     beforeUpload(file) {
       this.userImage = [file];
       this.createImagePreview(file);
+      this.isImageCroped = false;
+      this.showCropModal = true;
       return false;
     },
     createImagePreview(file) {
@@ -170,6 +177,19 @@ export default {
     handleRemove(file) {
       this.userImage = [];
       this.imagePreview = "";
+    },
+    onCrop({ coordinates, canvas }) {
+      canvas.toBlob((blob) => {
+        const file = new File([blob], "profile-image.jpg", {
+          type: "image/jpeg",
+        });
+        this.userImage = [file];
+      }, "image/jpeg");
+    },
+    handleImageCropped() {
+      this.createImagePreview(this.userImage[0]);
+      this.showCropModal = false;
+      this.isImageCroped = true;
     },
     async handleSubmitSuccess() {
       this.submitLoading = true;
@@ -191,4 +211,23 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.image-preview-container {
+  margin-top: 10px;
+  width: 300px;
+  .preview-image {
+    width: 300px;
+    height: 300px;
+    object-fit: fill;
+  }
+  @media (max-width: 600px) {
+    .image-preview-container {
+      width: 120px;
+      .preview-image {
+        width: 200px !important;
+        height: 200px !important;
+      }
+    }
+  }
+}
+</style>
