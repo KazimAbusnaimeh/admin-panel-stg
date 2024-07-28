@@ -61,12 +61,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 .stories-container {
   display: flex;
   gap: 10px;
@@ -89,65 +83,5 @@ export default {
     height: 100px;
     border-width: 2px;
   }
-}
-.modal-content-container {
-  display: flex;
-  align-items: center;
-  width: calc(100% + 48px);
-  height: 100%;
-  margin-left: -24px;
-  margin-right: -24px;
-  @media (max-width: 600px) {
-    width: 100%;
-    margin: 0;
-  }
-}
-.arrow {
-  font-size: 50px;
-  cursor: pointer;
-  color: var(--primary-color);
-}
-.story-content-wrapper {
-  display: flex;
-  overflow-x: auto;
-  width: 100%;
-  height: 100%;
-  scrollbar-width: none;
-  border-radius: 15px;
-  border: 3px solid var(--primary-color);
-  touch-action: none;
-}
-.story-content-wrapper::-webkit-scrollbar {
-  display: none;
-}
-.story-content {
-  flex: 0 0 auto;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.story-content-img {
-  cursor: pointer;
-  object-fit: fill;
-  width: 100%;
-  height: 100%;
-}
-.dot {
-  background-color: var(--primary-color);
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  opacity: 0.5;
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
-}
-.selected-dot {
-  opacity: 1;
-  width: 14px;
-  height: 10px;
-}
-.unselected-dot {
-  opacity: 0.5;
-  width: 10px;
-  height: 10px;
 }
 </style>

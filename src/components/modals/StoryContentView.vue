@@ -146,29 +146,7 @@ export default {
   -ms-user-select: none;
   user-select: none;
 }
-.stories-container {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  width: 100%;
-}
-.story-wrapper {
-  cursor: pointer;
-}
-.story-cover-img {
-  object-fit: fill;
-  width: 300px;
-  height: 300px;
-  border-radius: 30px;
-  border: 3px solid var(--primary-color);
-}
-@media (max-width: 600px) {
-  .story-cover-img {
-    width: 100px;
-    height: 100px;
-    border-width: 2px;
-  }
-}
+
 .modal-content-container {
   display: flex;
   align-items: center;
