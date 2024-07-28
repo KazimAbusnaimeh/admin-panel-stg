@@ -16,6 +16,11 @@ const routes = [
     name: "home",
     component: () => import("../views/Home.vue"),
   },
+  {
+    path: "/story-tabel",
+    name: "story",
+    component: () => import("../views/StoryTable.vue"),
+  },
 ];
 
 const router = createRouter({

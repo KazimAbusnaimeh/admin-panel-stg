@@ -11,7 +11,7 @@
         class="story-wrapper"
         v-for="story in stories"
         :key="story"
-        @click="showStoryModal(story.storyContent)"
+        @click="showStoryModal(story)"
       >
         <img
           v-if="story.coverImage"
@@ -21,146 +21,40 @@
           class="story-cover-img"
         />
       </div>
+      <story-content-view
+        :showModal="showStory"
+        :story="selectedStory"
+        @modale-canceled="showStory = false"
+      />
     </div>
-    <a-modal
-      v-model:open="showStory"
-      @cancel="handleCancel"
-      title="Story"
-      :width="isSmallScreen ? '90%' : '60%'"
-      style="top: 20px"
-      :bodyStyle="{
-        height: isSmallScreen ? '60vh' : '80vh',
-      }"
-    >
-      <div class="modal-content-container">
-        <CaretLeftOutlined
-          class="arrow"
-          @click="slideLeft"
-          v-if="!isSmallScreen"
-        />
-        <div class="story-content-wrapper" ref="imageContainer">
-          <div class="story-content" v-for="img in contentImage" :key="img">
-            <img
-              :src="img"
-              alt="img"
-              class="story-content-img"
-              :draggable="false"
-              @click="handleImageClick"
-            />
-          </div>
-        </div>
-        <div>
-          <CaretRightOutlined
-            class="arrow"
-            @click="slideRight"
-            v-if="!isSmallScreen"
-          />
-        </div>
-      </div>
-      <template #footer>
-        <div
-          style="
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 1%;
-          "
-        >
-          <span
-            v-for="(img, index) in contentImage"
-            :key="img"
-            :class="[
-              'dot',
-              {
-                'selected-dot': currentImg === index,
-                'unselected-dot': currentImg !== index,
-              },
-            ]"
-          ></span></div
-      ></template>
-    </a-modal>
   </div>
 </template>
 
 <script>
-import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons-vue";
+import StoryContentView from "../modals/StoryContentView.vue";
 
 export default {
   components: {
-    CaretRightOutlined,
-    CaretLeftOutlined,
+    StoryContentView,
   },
   data() {
     return {
       stories: [],
       loading: false,
       showStory: false,
-      contentImage: [],
-      isSmallScreen: window.innerWidth < 600,
-      arrowDisabled: false,
-      currentImg: 0,
+      selectedStory: {},
     };
   },
   methods: {
-    slideRight() {
-      const container = this.$refs.imageContainer;
-      if (!this.arrowDisabled) {
-        container.scrollBy({
-          left: container.clientWidth,
-          behavior: "smooth",
-        });
-        if (this.currentImg < this.contentImage.length - 1) this.currentImg++;
-      }
-      this.arrowDisabled = true;
-      setTimeout(() => {
-        this.arrowDisabled = false;
-      }, 500);
-    },
-    slideLeft() {
-      const container = this.$refs.imageContainer;
-      if (!this.arrowDisabled) {
-        container.scrollBy({
-          left: -container.clientWidth,
-          behavior: "smooth",
-        });
-        if (this.currentImg > 0) this.currentImg--;
-      }
-      this.arrowDisabled = true;
-      setTimeout(() => {
-        this.arrowDisabled = false;
-      }, 500);
-    },
-    showStoryModal(imgList) {
-      this.contentImage = imgList;
+    showStoryModal(story) {
+      this.selectedStory = story;
       this.showStory = true;
-    },
-    handleImageClick(event) {
-      const imgElement = event.target;
-      const imgWidth = imgElement.clientWidth;
-      const clickX = event.offsetX;
-      let rightSideClicked = clickX > imgWidth / 2;
-      if (rightSideClicked) {
-        this.slideRight();
-      } else {
-        this.slideLeft();
-      }
-    },
-    handleCancel() {
-      const container = this.$refs.imageContainer;
-      setTimeout(() => {
-        container.scrollTo({
-          left: 0,
-          behavior: "auto",
-        });
-        this.currentImg = 0;
-      }, 100);
     },
   },
   async created() {
     this.loading = true;
     await this.$store.dispatch("getAllStories");
-    this.stories = this.$store.getters.getStories.data;
+    this.stories = this.$store.getters.getStories;
     this.loading = false;
   },
 };

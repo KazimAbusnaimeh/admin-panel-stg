@@ -18,7 +18,7 @@ export default {
       try {
         commit("setError", { error: null });
         let res = await ApiService.get("/api/v1/story/get");
-        commit("setStories", res.data);
+        commit("setStories", res.data.data);
       } catch (err) {
         commit("setError", {
           error: err.response,
