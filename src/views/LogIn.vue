@@ -1,5 +1,5 @@
 <template>
-  <a-card style="margin-top: 40px">
+  <a-card>
     <h1 style="text-align: center">Log In</h1>
     <a-form
       layout="vertical"
@@ -54,7 +54,7 @@
           <router-link to="/register">Register</router-link></a-button
         >
       </div>
-      <a-form-item style="text-align: center">
+      <a-form-item class="ta-center">
         <a-button type="primary" html-type="submit" :loading="submitLoading">
           {{ submitLoading ? "Loading" : "Submit" }}
         </a-button>

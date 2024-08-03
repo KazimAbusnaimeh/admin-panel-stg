@@ -22,11 +22,12 @@
 </template>
 
 <script>
+import { routes } from "./router";
 export default {
   data() {
     return {
       path: this.$route.path,
-      routes: this.$router.getRoutes(),
+      routes: routes.filter((item) => item?.showInHeader),
     };
   },
   methods: {

@@ -1,25 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [
+export const routes = [
   {
     path: "/register",
     name: "register",
+    showInHeader: true,
     component: () => import("../views/Register.vue"),
   },
   {
     path: "/log-in",
     name: "log in",
+    showInHeader: true,
     component: () => import("../views/LogIn.vue"),
   },
   {
     path: "/home",
     name: "home",
+    showInHeader: true,
     component: () => import("../views/Home.vue"),
   },
   {
     path: "/story-tabel",
     name: "story",
-    component: () => import("../views/StoryTable.vue"),
+    showInHeader: true,
+    component: () => import("../views/story/StoryTable.vue"),
+  },
+  {
+    path: "/story-create",
+    name: "story Create",
+    showInHeader: false,
+    component: () => import("../views/story/StoryCreate.vue"),
   },
 ];
 

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <a-card style="margin-top: 40px">
+    <a-card>
       <h1 style="width: 100%; text-align: center">Register</h1>
       <a-form
         layout="vertical"
@@ -76,7 +76,7 @@
               <UploadOutlined style="font-size: 20px" />Upload file
             </a-button>
           </a-upload>
-          <div v-if="isImageCroped" class="image-preview-container">
+          <!-- <div v-if="isImageCroped" class="image-preview-container">
             <img :src="imagePreview" alt="img" class="preview-image" />
             <div class="d-flex ai-center jc-space-between">
               <p>{{ userImage[0].name }}</p>
@@ -86,7 +86,12 @@
                 >Remove Image</a-button
               >
             </div>
-          </div>
+          </div> -->
+          <ImageViewer
+            @image-remove="handleRemove"
+            :previewImagesList="[imagePreview]"
+            :imagesFilesList="userImage"
+          />
         </a-form-item>
         <a-modal
           v-model:open="showCropModal"
@@ -94,7 +99,7 @@
           @ok="handleImageCropped"
         >
           <cropper
-            :src="imagePreview"
+            :src="cropImage"
             ref="cropper"
             :stencil-props="{ aspectRatio: 1 }"
             @change="onCrop"
@@ -108,7 +113,7 @@
             <router-link to="/log-in">Log In</router-link></a-button
           >
         </div>
-        <a-form-item style="margin-top: 10px; width: 100%; text-align: center">
+        <a-form-item class="ta-center">
           <a-button type="primary" html-type="submit" :loading="submitLoading">
             {{ submitLoading ? "Loading" : "Submit" }}
           </a-button>
@@ -119,13 +124,14 @@
 </template>
 
 <script>
+import ImageViewer from "@/components/common/ImageViewer.vue";
 import { nameValidateError, inputName } from "../utils/Extentions";
 import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 
 export default {
-  components: { Cropper, UploadOutlined },
+  components: { Cropper, UploadOutlined, ImageViewer },
   data() {
     return {
       submitLoading: false,
@@ -137,8 +143,8 @@ export default {
       },
       userImage: [],
       imagePreview: "",
+      cropImage: "",
       showCropModal: false,
-      isImageCroped: false,
     };
   },
   methods: {
@@ -161,18 +167,21 @@ export default {
       }
     },
     beforeUpload(file) {
-      this.userImage = [file];
-      this.createImagePreview(file);
-      this.isImageCroped = false;
+      this.createImagePreview(file, true);
       this.showCropModal = true;
       return false;
     },
-    createImagePreview(file) {
+    createImagePreview(file, beforeUpload) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.imagePreview = e.target.result;
+        if (beforeUpload) this.cropImage = e.target.result;
+        else this.imagePreview = e.target.result;
       };
-      reader.readAsDataURL(file);
+      try {
+        reader.readAsDataURL(file);
+      } catch (err) {
+        console.log("kazim", err);
+      }
     },
     handleRemove(file) {
       this.userImage = [];
@@ -187,9 +196,8 @@ export default {
       }, "image/jpeg");
     },
     handleImageCropped() {
-      this.createImagePreview(this.userImage[0]);
+      this.createImagePreview(this.userImage[0], false);
       this.showCropModal = false;
-      this.isImageCroped = true;
     },
     async handleSubmitSuccess() {
       this.submitLoading = true;

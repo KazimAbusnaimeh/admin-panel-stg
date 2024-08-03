@@ -1,5 +1,13 @@
 :root {
   --primary-color: #1677ff;
+  --secondary-color: #d9d9d9;
+}
+
+h1 {
+  text-transform: capitalize;
+  font-size: 28px;
+  font-weight: 650;
+  color: black;
 }
 
 .ant-layout {
@@ -11,9 +19,6 @@
   margin: 0 auto;
 }
 
-h1 {
-  text-transform: capitalize;
-  font-size: 28px;
-  font-weight: 650;
-  color: black;
+.ant-card {
+  margin-top: 5%;
 }

@@ -6,7 +6,14 @@
     <a-skeleton></a-skeleton>
   </div>
   <a-card v-else>
-    <h1>Stories Table</h1>
+    <template #title>
+      <div class="d-flex ai-center jc-space-between">
+        <h1>Stories Table</h1>
+        <a-button type="link">
+          <router-link to="/story-create">Create Story</router-link></a-button
+        >
+      </div></template
+    >
     <a-table
       :columns="tableHeader"
       :data-source="tableData"
