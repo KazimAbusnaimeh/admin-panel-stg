@@ -190,7 +190,7 @@ export default {
           `${
             this.imageType === "cover"
               ? "cover-image.jpg"
-              : `content-img-${this.currentContentimageIndex + 1}.jpg`
+              : `content-img-${Math.floor(Math.random() * 1000)}.jpg`
           }`,
           {
             type: "image/jpeg",

@@ -8,7 +8,7 @@
         <img :src="img" style="" />
         <div class="d-flex ai-center jc-space-between" style="padding: 0 10px">
           <p class="image-name">
-            {{ imagesFilesList[index].name || `image-${index + 1}` }}
+            {{ `image-${index + 1}` }}
           </p>
           <DeleteOutlined
             v-if="removable"
