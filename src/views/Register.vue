@@ -180,7 +180,7 @@ export default {
       try {
         reader.readAsDataURL(file);
       } catch (err) {
-        console.log("kazim", err);
+        console.log(err);
       }
     },
     handleRemove(file) {
@@ -201,10 +201,15 @@ export default {
     },
     async handleSubmitSuccess() {
       this.submitLoading = true;
-      await this.$store.dispatch("signUp", {
-        ...this.form,
-        userImage: this.userImage,
-      });
+      const formData = new FormData();
+      formData.append("name", this.form.name);
+      formData.append("email", this.form.email);
+      formData.append("password", this.form.password);
+      formData.append("password_confirm", this.form.password_confirm);
+      if (this.userImage.length > 0) {
+        formData.append("image", this.userImage[0]);
+      }
+      await this.$store.dispatch("signUp", formData);
       let error = this.$store.getters.getError;
       if (error) {
         this.submitLoading = false;

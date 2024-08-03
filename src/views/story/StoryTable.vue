@@ -1,9 +1,11 @@
 <template>
   <div v-if="loading">
-    <a-skeleton></a-skeleton>
-    <a-skeleton></a-skeleton>
-    <a-skeleton></a-skeleton>
-    <a-skeleton></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
   </div>
   <a-card v-else>
     <template #title>

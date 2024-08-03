@@ -1,10 +1,9 @@
 <template>
   <div>
     <div v-if="loading">
-      <a-skeleton></a-skeleton>
-      <a-skeleton></a-skeleton>
-      <a-skeleton></a-skeleton>
-      <a-skeleton></a-skeleton>
+      <a-skeleton active></a-skeleton>
+      <a-skeleton active></a-skeleton>
+      <a-skeleton active></a-skeleton>
     </div>
     <div class="stories-container" v-else>
       <div

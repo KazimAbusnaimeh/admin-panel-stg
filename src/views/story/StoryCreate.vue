@@ -195,12 +195,10 @@ export default {
     async handleSubmitSuccess() {
       this.submitLoading = true;
 
-      // Create a new FormData object
       const formData = new FormData();
       formData.append("title", this.form.title);
       formData.append("coverImage", this.form.coverImage[0]);
 
-      // Append content images if any
       this.form.contentImages.forEach((image, index) => {
         formData.append("contentImages", image);
       });

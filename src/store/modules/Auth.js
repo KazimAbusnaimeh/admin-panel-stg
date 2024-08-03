@@ -49,7 +49,11 @@ export default {
     async logIn({ commit }, payload) {
       try {
         commit("setError", { error: null });
-        let res = await ApiService.post("/api/v1/auth/admin/login", payload);
+        let res = await ApiService.post(
+          "/api/v1/auth/admin/login",
+          payload,
+          true
+        );
         commit("setUser", JSON.stringify(res.data));
       } catch (err) {
         commit("setError", {

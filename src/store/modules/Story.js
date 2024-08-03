@@ -29,7 +29,7 @@ export default {
     async createStory({ commit }, payload) {
       try {
         commit("setError", { error: null });
-        await ApiService.post("/api/v1/story/create", payload, true);
+        await ApiService.post("/api/v1/story/create", payload);
       } catch (err) {
         commit("setError", {
           error: err.response,

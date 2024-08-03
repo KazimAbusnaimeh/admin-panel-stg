@@ -53,14 +53,8 @@ class ApiService {
     return ApiService.vueInstance.axios.get(`${resource}/${slug}`);
   }
 
-  static post(resource, params, isFormData = false) {
-    let headers = {};
-    if (isFormData) {
-      headers["Content-Type"] = "multipart/form-data";
-    }
-    return ApiService.vueInstance.axios.post(`${resource}`, params, {
-      headers,
-    });
+  static post(resource, params) {
+    return ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
   static put(resource, params) {
