@@ -37,5 +37,16 @@ export default {
         });
       }
     },
+    async deleteStory({ commit }, id) {
+      try {
+        commit("setError", { error: null });
+        await ApiService.delete("/api/v1/story/delete", id);
+      } catch (err) {
+        commit("setError", {
+          error: err.response,
+          status: err.response.status,
+        });
+      }
+    },
   },
 };
