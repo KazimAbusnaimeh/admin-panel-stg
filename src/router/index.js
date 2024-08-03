@@ -26,10 +26,10 @@ export const routes = [
     component: () => import("../views/story/StoryTable.vue"),
   },
   {
-    path: "/story-create",
+    path: "/story-form",
     name: "story Create",
     showInHeader: false,
-    component: () => import("../views/story/StoryCreate.vue"),
+    component: () => import("../views/story/StoryForm.vue"),
   },
 ];
 

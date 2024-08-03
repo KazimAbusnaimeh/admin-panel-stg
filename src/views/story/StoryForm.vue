@@ -1,6 +1,15 @@
 <template>
-  <a-card>
-    <template #title> <h1>Create Story</h1> </template>
+  <div v-if="loading">
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+    <a-skeleton active></a-skeleton>
+  </div>
+  <a-card v-else>
+    <template #title>
+      <h1>{{ storyId ? "Edit" : "Create" }} Story</h1>
+    </template>
     <a-form
       ref="form"
       layout="vertical"
@@ -40,13 +49,17 @@
           :show-upload-list="false"
         >
           <a-button type="primary" ghost @click="imageType = 'cover'">
-            <UploadOutlined style="font-size: 20px" />Upload Image
+            <UploadOutlined style="font-size: 20px" />{{
+              form.coverImage.length ? "Change" : "Upload"
+            }}
+            Image
           </a-button>
         </a-upload>
         <ImageViewer
           @image-remove="handleRemoveCoverImage"
           :previewImagesList="previewCoverImage"
           :imagesFilesList="form.coverImage"
+          :removable="false"
         />
       </a-form-item>
       <a-form-item
@@ -69,13 +82,18 @@
           :show-upload-list="false"
         >
           <a-button type="primary" ghost @click="imageType = 'content'">
-            <UploadOutlined style="font-size: 20px" />Upload Image
+            <UploadOutlined style="font-size: 20px" />{{
+              !isContentImageUpdated && storyId
+                ? "Replace Images"
+                : "Upload Image"
+            }}
           </a-button>
         </a-upload>
         <ImageViewer
           @image-remove="handleRemoveContentImage"
           :previewImagesList="previewContentImages"
           :imagesFilesList="form.contentImages"
+          :removable="!isContentImageUpdated && !storyId"
         />
       </a-form-item>
       <a-modal
@@ -101,10 +119,12 @@ import ImageViewer from "../../components/common/ImageViewer.vue";
 import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
+import Swal from "sweetalert2";
 export default {
   components: { UploadOutlined, Cropper, ImageViewer },
   data() {
     return {
+      storyId: this.$route.query?.storyId,
       form: {
         title: "",
         coverImage: [],
@@ -112,12 +132,14 @@ export default {
       },
       submitLoading: false,
       isImageCroped: false,
+      isContentImageUpdated: false,
       showCropModal: false,
       cropImage: "",
       previewCoverImage: [],
       previewContentImages: [],
       currentContentimageIndex: 0,
       imageType: "",
+      loading: false,
     };
   },
   methods: {
@@ -137,6 +159,12 @@ export default {
           if (this.imageType == "content") {
             this.previewContentImages.push(e.target.result);
             this.currentContentimageIndex++;
+            if (!this.isContentImageUpdated && this.storyId) {
+              this.form.contentImages = this.form.contentImages.slice(-1);
+              this.previewContentImages = this.previewContentImages.slice(-1);
+              this.currentContentimageIndex = 1;
+              this.isContentImageUpdated = true;
+            }
           }
         }
       };
@@ -199,24 +227,47 @@ export default {
       formData.append("title", this.form.title);
       formData.append("coverImage", this.form.coverImage[0]);
 
-      this.form.contentImages.forEach((image, index) => {
-        formData.append("contentImages", image);
-      });
+      if (!this.storyId || this.isContentImageUpdated)
+        this.form.contentImages.forEach((image, index) => {
+          formData.append("contentImages", image);
+        });
+      else formData.append("contentImages", null);
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      formData.append("id", this.storyId);
 
-      await this.$store.dispatch("createStory", formData);
+      if (this.storyId) await this.$store.dispatch("updateStory", formData);
+      else await this.$store.dispatch("createStory", formData);
       let error = this.$store.getters.getError;
       if (error) {
         this.submitLoading = false;
       } else {
-        this.$router.go(-1);
-        this.submitLoading = false;
+        Swal.fire({
+          title: `Successfully ${this.storyId ? "Updated" : "Created"}!`,
+          text: `Story has been ${this.storyId ? "updated" : "created"}.`,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          this.$router.go(-1);
+          this.submitLoading = false;
+        });
       }
     },
     FormError() {},
+  },
+  async created() {
+    if (this.storyId) {
+      this.loading = true;
+      await this.$store.dispatch("getStoryById", this.storyId);
+      let story = this.$store.getters.getStory;
+      this.form.title = story.title;
+      this.form.coverImage = [story.coverImage];
+      this.form.contentImages = [...story.storyContent];
+      this.previewCoverImage = [story.coverImage];
+      this.previewContentImages = [...story.storyContent];
+      this.currentContentimageIndex = story.storyContent.length;
+      this.loading = false;
+    }
   },
 };
 </script>

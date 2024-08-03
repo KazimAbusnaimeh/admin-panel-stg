@@ -11,7 +11,7 @@
       <div class="d-flex ai-center jc-space-between">
         <h1>Stories Table</h1>
         <a-button type="link">
-          <router-link to="/story-create">Create Story</router-link></a-button
+          <router-link to="/story-form">Create Story</router-link></a-button
         >
       </div></template
     >

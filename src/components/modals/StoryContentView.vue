@@ -40,22 +40,38 @@
           display: flex;
           width: 100%;
           justify-content: center;
-          gap: 10px;
-          margin-top: 1%;
+          align-items: center;
         "
       >
-        <span
-          v-for="(img, index) in story.storyContent"
-          :key="img"
-          :class="[
-            'dot',
-            {
-              'selected-dot': currentImg === index,
-              'unselected-dot': currentImg !== index,
-            },
-          ]"
-        ></span></div
-    ></template>
+        <div
+          style="
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1%;
+            margin-left: 50px;
+          "
+        >
+          <span
+            v-for="(img, index) in story.storyContent"
+            :key="img"
+            :class="[
+              'dot',
+              {
+                'selected-dot': currentImg === index,
+                'unselected-dot': currentImg !== index,
+              },
+            ]"
+          ></span>
+        </div>
+        <a-button style="margin-left: auto" type="primary">
+          <router-link :to="`/story-form?storyId=${story._id}`"
+            >Edit</router-link
+          ></a-button
+        >
+      </div>
+    </template>
   </a-modal>
 </template>
 

@@ -8,9 +8,10 @@
         <img :src="img" style="" />
         <div class="d-flex ai-center jc-space-between" style="padding: 0 10px">
           <p class="image-name">
-            {{ imagesFilesList[index].name }}
+            {{ imagesFilesList[index].name || `image-${index + 1}` }}
           </p>
           <DeleteOutlined
+            v-if="removable"
             type="primary"
             ghost
             @click="handleRemove(index)"
@@ -25,7 +26,14 @@
 <script>
 import { DeleteOutlined } from "@ant-design/icons-vue";
 export default {
-  props: ["previewImagesList", "imagesFilesList"],
+  props: {
+    previewImagesList: Array,
+    imagesFilesList: Array,
+    removable: {
+      type: Boolean,
+      default: true,
+    },
+  },
   components: { DeleteOutlined },
   methods: {
     handleRemove(index) {

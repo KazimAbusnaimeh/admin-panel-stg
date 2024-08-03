@@ -73,20 +73,12 @@
             :show-upload-list="false"
           >
             <a-button type="default">
-              <UploadOutlined style="font-size: 20px" />Upload file
+              <UploadOutlined style="font-size: 20px" />{{
+                userImage.length ? "Change" : "Upload"
+              }}
+              Image
             </a-button>
           </a-upload>
-          <!-- <div v-if="isImageCroped" class="image-preview-container">
-            <img :src="imagePreview" alt="img" class="preview-image" />
-            <div class="d-flex ai-center jc-space-between">
-              <p>{{ userImage[0].name }}</p>
-              <a-button
-                @click="handleRemove(userImage[0])"
-                style="margin-top: 10px"
-                >Remove Image</a-button
-              >
-            </div>
-          </div> -->
           <ImageViewer
             @image-remove="handleRemove"
             :previewImagesList="[imagePreview]"
