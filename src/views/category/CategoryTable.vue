@@ -10,9 +10,16 @@
     <template #title>
       <div class="d-flex ai-center jc-space-between">
         <h1>Stories Table</h1>
-        <a-button type="link">
-          <router-link to="/story-form">Create Story</router-link></a-button
+        <a-button
+          type="link"
+          @click="
+            (showCategoryFormModal = true),
+              (currentCategory = {}),
+              (dispatchMethod = 'createCategory')
+          "
         >
+          Create Category
+        </a-button>
       </div></template
     >
     <a-table
@@ -41,12 +48,23 @@
       </template>
     </a-table>
   </a-card>
+  <category-and-type-of-work-modal
+    :showModal="showCategoryFormModal"
+    @modal-canceled="showCategoryFormModal = cancel"
+    modalType="Category"
+    :currentItem="currentCategory"
+    :isCreate="!currentCategory._id"
+    :dispatchMethod="dispatchMethod"
+    @category-Configured="onCategoryConfigured"
+  />
 </template>
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
 import { DeleteOutlined } from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
+import CategoryAndTypeOfWorkModal from "@/components/modals/CategoryAndTypeOfWorkModal.vue";
+import { successMessage } from "@/utils/Extentions";
 const tableHeader = [
   {
     title: "Title",
@@ -66,45 +84,45 @@ const tableHeader = [
 ];
 
 export default {
-  components: { StoryContentView, DeleteOutlined },
+  components: { StoryContentView, DeleteOutlined, CategoryAndTypeOfWorkModal },
   data() {
     return {
       tableHeader,
       tableData: [],
       loading: false,
-      currentStory: {},
-      showStory: false,
+      currentCategory: {},
+      showCategoryFormModal: false,
+      dispatchMethod: "",
     };
   },
   methods: {
-    deleteStory(id) {
-      //   Swal.fire({
-      //     icon: "warning",
-      //     title: "Are You Sure",
-      //     text: "You won't be able to revert this!",
-      //     showCancelButton: true,
-      //     confirmButtonColor: "#1677ff",
-      //     confirmButtonText: "Yes, Delete it",
-      //     cancelButtonText: "Cancel",
-      //   }).then((result) => {
-      //     if (result.isConfirmed) {
-      //       this.$store.dispatch("deleteCategory", id);
-      //       let error = this.$store.getters.getError;
-      //       if (!error) {
-      //         Swal.fire({
-      //           title: "Successfully Deleted!",
-      //           text: "Category has been deleted.",
-      //           icon: "success",
-      //           showConfirmButton: false,
-      //           timer: 2000,
-      //         }).then(async () => {
-      //           await this.loadPageData();
-      //         });
-      //       } else {
-      //         Swal.fire("Somthing Went Wrong", error, "error");
-      //       }
-      //     }
-      //   });
+    async deleteStory(id) {
+      Swal.fire({
+        icon: "warning",
+        title: "Are You Sure",
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: "#1677ff",
+        confirmButtonText: "Yes, Delete it",
+        cancelButtonText: "Cancel",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await this.$store.dispatch("deleteCategory", id);
+          let error = this.$store.getters.getError;
+          if (!error) {
+            successMessage("Deleted", "Category", this.loadPageData());
+          } else {
+            Swal.fire("Somthing Went Wrong", error, "error");
+          }
+        }
+      });
+    },
+    onCategoryConfigured() {
+      successMessage(
+        this.currentCategory._id ? "Updated" : "Created",
+        "Category",
+        this.loadPageData()
+      );
     },
     customRow(record) {
       return {
@@ -114,8 +132,9 @@ export default {
         onClick: (event) => {
           const tagName = event.target.tagName;
           if (tagName != "svg") {
-            this.currentStory = record;
-            this.showStory = true;
+            this.currentCategory = record;
+            this.dispatchMethod = "updateCategory";
+            this.showCategoryFormModal = true;
           }
         },
       };

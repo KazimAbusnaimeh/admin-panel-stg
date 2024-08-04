@@ -54,6 +54,7 @@
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
+import { successMessage } from "@/utils/Extentions";
 import { DeleteOutlined } from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
 const tableHeader = [
@@ -100,20 +101,12 @@ export default {
         confirmButtonColor: "#1677ff",
         confirmButtonText: "Yes, Delete it",
         cancelButtonText: "Cancel",
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          this.$store.dispatch("deleteStory", id);
+          await this.$store.dispatch("deleteStory", id);
           let error = this.$store.getters.getError;
           if (!error) {
-            Swal.fire({
-              title: "Successfully Deleted!",
-              text: "Story has been deleted.",
-              icon: "success",
-              showConfirmButton: false,
-              timer: 2000,
-            }).then(async () => {
-              await this.loadPageData();
-            });
+            successMessage("Deleted", "Story", await this.loadPageData());
           } else {
             Swal.fire("Somthing Went Wrong", error, "error");
           }

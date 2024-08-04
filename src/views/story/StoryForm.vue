@@ -120,6 +120,7 @@ import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import Swal from "sweetalert2";
+import { successMessage } from "@/utils/Extentions";
 export default {
   components: { UploadOutlined, Cropper, ImageViewer },
   data() {
@@ -241,19 +242,18 @@ export default {
       if (error) {
         this.submitLoading = false;
       } else {
-        Swal.fire({
-          title: `Successfully ${this.storyId ? "Updated" : "Created"}!`,
-          text: `Story has been ${this.storyId ? "updated" : "created"}.`,
-          icon: "success",
-          showConfirmButton: false,
-          timer: 2000,
-        }).then(() => {
-          this.$router.go(-1);
-          this.submitLoading = false;
-        });
+        successMessage(
+          this.storyId ? "Updated" : "Created",
+          "Story",
+          this.onSuccess
+        );
       }
     },
     FormError() {},
+    onSuccess() {
+      this.$router.go(-1);
+      this.submitLoading = false;
+    },
   },
   async created() {
     if (this.storyId) {

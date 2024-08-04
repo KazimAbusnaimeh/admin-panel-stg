@@ -51,7 +51,7 @@ export default {
         await ApiService.post("/api/v1/category/add/", payload);
       } catch (err) {
         commit("setError", {
-          error: err.response,
+          error: err.response.data.message,
           status: err.response.status,
         });
       }
@@ -70,7 +70,7 @@ export default {
     async deleteCategory({ commit }, id) {
       try {
         commit("setError", { error: null });
-        await ApiService.delete("/api/v1/category/delete/", id);
+        await ApiService.delete("/api/v1/category/delete", id);
       } catch (err) {
         commit("setError", {
           error: err.response,

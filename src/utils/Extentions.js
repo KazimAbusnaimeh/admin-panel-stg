@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export function nameValidateError(rule, value, callback) {
   if (!value) {
     callback("");
@@ -23,4 +25,18 @@ export function nameValidateError(rule, value, callback) {
 
 export function inputName(name) {
   return name.replace(/[^a-z ^A-Z]/g, "").slice(0, 60);
+}
+
+export function successMessage(type, name, callback = () => {}) {
+  Swal.fire({
+    title: `Successfully ${type}!`,
+    text: `${name} has been ${type}.`,
+    icon: "success",
+    showConfirmButton: false,
+    timer: 2000,
+  }).then(async () => {
+    if (typeof callback === "function") {
+      await callback();
+    }
+  });
 }
