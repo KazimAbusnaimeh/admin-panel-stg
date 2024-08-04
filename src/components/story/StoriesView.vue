@@ -3,7 +3,6 @@
     <div v-if="loading">
       <a-skeleton active></a-skeleton>
       <a-skeleton active></a-skeleton>
-      <a-skeleton active></a-skeleton>
     </div>
     <div class="stories-container" v-else>
       <div
