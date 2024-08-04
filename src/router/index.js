@@ -20,7 +20,7 @@ export const routes = [
     component: () => import("../views/Home.vue"),
   },
   {
-    path: "/story-tabel",
+    path: "/story-table",
     name: "story",
     showInHeader: true,
     component: () => import("../views/story/StoryTable.vue"),
@@ -30,6 +30,12 @@ export const routes = [
     name: "story Create",
     showInHeader: false,
     component: () => import("../views/story/StoryForm.vue"),
+  },
+  {
+    path: "/category-table",
+    name: "category",
+    showInHeader: true,
+    component: () => import("../views/category/CategoryTable.vue"),
   },
 ];
 
