@@ -24,8 +24,28 @@ class ApiService {
         return Promise.reject(error);
       }
     );
+    let lastNotificationTime = 0;
+    const notificationInterval = 2000;
     ApiService.vueInstance.axios.interceptors.response.use(
-      (response) => {
+      async (response) => {
+        if (
+          store.getters.getUser == null &&
+          router.currentRoute._value.path !== "/log-in" &&
+          router.currentRoute._value.path !== "/register"
+        ) {
+          const currentTime = Date.now();
+          if (currentTime - lastNotificationTime > notificationInterval) {
+            lastNotificationTime = currentTime;
+            await Swal.fire({
+              title: "Session Expired!",
+              icon: "warning",
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(async () => {
+              await store.dispatch("LogOut");
+            });
+          }
+        }
         return response;
       },
       (error) => {
@@ -36,8 +56,7 @@ class ApiService {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            router.push("sign-in");
-            store.dispatch("logout");
+            store.dispatch("LogOut");
           });
         } else {
           return Promise.reject(error);

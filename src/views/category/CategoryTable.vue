@@ -18,7 +18,7 @@
               (dispatchMethod = 'createCategory')
           "
         >
-          Create Category
+          Add Category
         </a-button>
       </div></template
     >

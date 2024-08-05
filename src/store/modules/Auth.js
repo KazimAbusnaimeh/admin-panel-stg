@@ -5,14 +5,18 @@ export default {
   state: {
     user: JSON.parse(localStorage.getItem("user")) || null,
     error: null,
+    loggedOutStatus: false,
   },
   mutations: {
     setUser(state, user) {
       state.user = user;
       localStorage.setItem("user", user);
     },
+    setLoggedOutStatus(state, payload) {
+      state.loggedOutStatus = payload;
+    },
     destroyUser() {
-      localStorage.removeItem("user");
+      if (localStorage.getItem("user")) localStorage.removeItem("user");
     },
     setError(
       state,
@@ -32,6 +36,9 @@ export default {
     },
     getError(state) {
       return state.error;
+    },
+    getLoggedOutStatus(state) {
+      return state.loggedOutStatus;
     },
   },
   actions: {
@@ -62,8 +69,13 @@ export default {
       }
     },
     LogOut({ commit }) {
+      commit("setLoggedOutStatus", true);
       commit("setUser", null);
-      commit("setError", null);
+      try {
+        commit("setError", null);
+      } catch (err) {
+        console.log(err);
+      }
       commit("destroyUser");
       router.push("/log-in");
     },

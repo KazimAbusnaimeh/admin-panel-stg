@@ -71,6 +71,10 @@ export default {
     async handleSubmitSuccess() {
       this.submitLoading = true;
       await this.$store.dispatch("logIn", this.form);
+      let error = this.$store.getters.getError;
+      if (!error) {
+        this.$router.push("/home");
+      }
       this.submitLoading = false;
     },
     async FormError() {},

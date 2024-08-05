@@ -206,6 +206,7 @@ export default {
       if (error) {
         this.submitLoading = false;
       } else {
+        this.$router.push("/home");
         this.submitLoading = false;
       }
     },
