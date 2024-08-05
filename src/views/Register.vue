@@ -66,7 +66,6 @@
         <a-form-item label="Profile Image">
           <a-upload
             :file-list="userImage"
-            :remove="handleRemove"
             :before-upload="beforeUpload"
             accept="image/*"
             :multiple="false"

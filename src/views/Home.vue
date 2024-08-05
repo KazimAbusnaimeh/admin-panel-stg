@@ -4,7 +4,14 @@
       <h1>stories</h1>
       <stories-view />
       <h1>Analytics</h1>
-      <div style="display: flex; justify-content: space-between">
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10%;
+        "
+      >
         <analytics-card
           title="Stories"
           dispatchMethod="getAllStories"
@@ -16,9 +23,9 @@
           getterMethod="getCategories"
         />
         <analytics-card
-          title="Stories"
-          dispatchMethod="getAllStories"
-          getterMethod="getStories"
+          title="Type Of Work"
+          dispatchMethod="getAllTypesOfWork"
+          getterMethod="getTypesOfWork"
         />
       </div>
     </div>

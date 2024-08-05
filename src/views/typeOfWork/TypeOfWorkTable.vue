@@ -13,12 +13,12 @@
         <a-button
           type="link"
           @click="
-            (showCategoryFormModal = true),
-              (currentCategory = {}),
-              (dispatchMethod = 'createCategory')
+            (showTypeOfWorkFormModal = true),
+              (currentTypeOfWork = {}),
+              (dispatchMethod = 'createTypeOfWork')
           "
         >
-          Add Category
+          Add Type Of Work
         </a-button>
       </div></template
     >
@@ -29,16 +29,25 @@
       :customRow="customRow"
     >
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'title'">
-          <div>{{ record.categoryName }}</div>
+        <template v-if="column.key === 'typeImage'">
+          <div class="img-container">
+            <img
+              :src="tableData[0].typeImage"
+              alt="type image"
+              class="cover-img"
+            />
+          </div>
         </template>
-        <template v-else-if="column.key === 'serveces'">
+        <template v-if="column.key === 'title'">
+          <div>{{ record.typeName }}</div>
+        </template>
+        <template v-else-if="column.key === 'storyContent'">
           <div>
             {{ record.services.length }}
           </div>
         </template>
         <template v-else-if="column.key === 'action'">
-          <a-tooltip :title="'Delete Category'" color="red">
+          <a-tooltip :title="'Delete Type Of Work'" color="red">
             <DeleteOutlined
               style="font-size: 18px"
               @click="deleteStory(record._id)"
@@ -49,13 +58,13 @@
     </a-table>
   </a-card>
   <category-and-type-of-work-modal
-    :showModal="showCategoryFormModal"
-    @modal-canceled="showCategoryFormModal = cancel"
-    modalType="Category"
-    :currentItem="currentCategory"
-    :isCreate="!currentCategory._id"
+    :showModal="showTypeOfWorkFormModal"
+    @modal-canceled="showTypeOfWorkFormModal = cancel"
+    modalType="Type Of Work"
+    :currentItem="currentTypeOfWork"
+    :isCreate="!currentTypeOfWork._id"
     :dispatchMethod="dispatchMethod"
-    @category-Configured="onCategoryConfigured"
+    @category-Configured="onTypeOfWorkConfigured"
   />
 </template>
 
@@ -67,15 +76,16 @@ import CategoryAndTypeOfWorkModal from "@/components/modals/CategoryAndTypeOfWor
 import { successMessage } from "@/utils/Extentions";
 const tableHeader = [
   {
-    title: "Name",
-    dataIndex: "categoryName",
-    key: "title",
+    title: "Number of Story images",
+    dataIndex: "typeImage",
+    key: "typeImage",
   },
   {
-    title: "Number of services",
-    dataIndex: "services",
-    key: "serveces",
+    title: "Name",
+    dataIndex: "typeName",
+    key: "title",
   },
+
   {
     title: "Action",
     dataIndex: "_id",
@@ -90,8 +100,8 @@ export default {
       tableHeader,
       tableData: [],
       loading: false,
-      currentCategory: {},
-      showCategoryFormModal: false,
+      currentTypeOfWork: {},
+      showTypeOfWorkFormModal: false,
       dispatchMethod: "",
     };
   },
@@ -107,20 +117,20 @@ export default {
         cancelButtonText: "Cancel",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await this.$store.dispatch("deleteCategory", id);
+          await this.$store.dispatch("deleteTypeOfWork", id);
           let error = this.$store.getters.getError;
           if (!error) {
-            successMessage("Deleted", "Category", this.loadPageData());
+            successMessage("Deleted", "Type Of Work", this.loadPageData());
           } else {
             Swal.fire("Somthing Went Wrong", error, "error");
           }
         }
       });
     },
-    onCategoryConfigured() {
+    onTypeOfWorkConfigured() {
       successMessage(
-        this.currentCategory._id ? "Updated" : "Created",
-        "Category",
+        this.currentTypeOfWork._id ? "Updated" : "Created",
+        "TypeOfWork",
         this.loadPageData()
       );
     },
@@ -132,17 +142,17 @@ export default {
         onClick: (event) => {
           const tagName = event.target.tagName;
           if (tagName != "svg") {
-            this.currentCategory = record;
-            this.dispatchMethod = "updateCategory";
-            this.showCategoryFormModal = true;
+            this.currentTypeOfWork = record;
+            this.dispatchMethod = "updateTypeOfWork";
+            this.showTypeOfWorkFormModal = true;
           }
         },
       };
     },
     async loadPageData() {
       this.loading = true;
-      await this.$store.dispatch("getAllCategories");
-      this.tableData = this.$store.getters.getCategories;
+      await this.$store.dispatch("getAllTypesOfWork");
+      this.tableData = this.$store.getters.getTypesOfWork;
       this.loading = false;
     },
   },

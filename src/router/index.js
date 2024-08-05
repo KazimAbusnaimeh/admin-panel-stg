@@ -27,16 +27,22 @@ export const routes = [
     component: () => import("../views/story/StoryTable.vue"),
   },
   {
+    path: "/category-table",
+    name: "category",
+    showInHeader: true,
+    component: () => import("../views/category/CategoryTable.vue"),
+  },
+  {
     path: "/story-form",
     name: "story Create",
     showInHeader: false,
     component: () => import("../views/story/StoryForm.vue"),
   },
   {
-    path: "/category-table",
-    name: "category",
+    path: "/type-of-work-table",
+    name: "type of work",
     showInHeader: true,
-    component: () => import("../views/category/CategoryTable.vue"),
+    component: () => import("../views/typeOfWork/TypeOfWorkTable.vue"),
   },
 ];
 

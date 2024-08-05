@@ -1,31 +1,31 @@
 import ApiService from "@/core/service/ApiService";
 export default {
   state: {
-    categories: {},
-    category: {},
+    typesOfWork: {},
+    typeOfWork: {},
   },
   getters: {
-    getCategories(state) {
-      return state.categories;
+    getTypesOfWork(state) {
+      return state.typesOfWork;
     },
-    getCategory(state) {
-      return state.category;
+    getTypeOfWork(state) {
+      return state.typeOfWork;
     },
   },
   mutations: {
-    setCategories(state, payload) {
-      state.categories = payload;
+    setTypesOfWork(state, payload) {
+      state.typesOfWork = payload;
     },
-    setCategory(state, payload) {
-      state.category = payload;
+    setTypeOfWork(state, payload) {
+      state.typeOfWork = payload;
     },
   },
   actions: {
-    async getAllCategories({ commit }) {
+    async getAllTypesOfWork({ commit }) {
       try {
         commit("setError", { error: null });
-        let res = await ApiService.get("/api/v1/category/");
-        commit("setCategories", res.data.data);
+        let res = await ApiService.get("/api/v1/type-of-work/");
+        commit("setTypesOfWork", res.data.data);
       } catch (err) {
         commit("setError", {
           error: err.response,
@@ -33,11 +33,11 @@ export default {
         });
       }
     },
-    async getCategoryById({ commit }, id) {
+    async getTypeOfWorkById({ commit }, id) {
       try {
         commit("setError", { error: null });
-        let res = await ApiService.get(`/api/v1/category/get/${id}`);
-        commit("setCategory", res.data.data);
+        let res = await ApiService.get(`/api/v1/type-of-work/get/${id}`);
+        commit("setTypeOfWork", res.data.data);
       } catch (err) {
         commit("setError", {
           error: err.response,
@@ -45,10 +45,10 @@ export default {
         });
       }
     },
-    async createCategory({ commit }, payload) {
+    async createTypeOfWork({ commit }, payload) {
       try {
         commit("setError", { error: null });
-        await ApiService.post("/api/v1/category/add/", payload);
+        await ApiService.post("/api/v1/type-of-work/add/", payload);
       } catch (err) {
         commit("setError", {
           error: err.response.data.message,
@@ -56,10 +56,13 @@ export default {
         });
       }
     },
-    async updateCategory({ commit }, payload) {
+    async updateTypeOfWork({ commit }, payload) {
       try {
         commit("setError", { error: null });
-        await ApiService.put(`/api/v1/category/update/${payload._id}`, payload);
+        await ApiService.put(
+          `/api/v1/type-of-work/update/${payload._id}`,
+          payload
+        );
       } catch (err) {
         commit("setError", {
           error: err.response,
@@ -67,10 +70,10 @@ export default {
         });
       }
     },
-    async deleteCategory({ commit }, id) {
+    async deleteTypeOfWork({ commit }, id) {
       try {
         commit("setError", { error: null });
-        await ApiService.delete("/api/v1/category/delete", id);
+        await ApiService.delete("/api/v1/type-of-work/delete", id);
       } catch (err) {
         commit("setError", {
           error: err.response,
