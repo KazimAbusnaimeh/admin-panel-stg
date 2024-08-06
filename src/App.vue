@@ -1,8 +1,8 @@
 <template>
   <div>
     <a-layout>
-      <a-layout-header>
-        <div class="header-content" v-if="user">
+      <a-layout-header class="header">
+        <!-- <div class="header-content" v-if="user">
           <a-menu
             theme="dark"
             mode="horizontal"
@@ -22,7 +22,7 @@
           <a-button @click="handleLogout" class="logout-button"
             >Logout</a-button
           >
-        </div>
+        </div> -->
       </a-layout-header>
       <a-layout-content>
         <div class="content-layout">
@@ -61,14 +61,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
+/*.header {
   max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #001529;
   padding: 0 16px;
-}
+}*/
 
 .header-content {
   display: flex;
