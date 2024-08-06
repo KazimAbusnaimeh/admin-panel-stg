@@ -46,7 +46,6 @@ export default {
       return this.$route.path === path ? "ant-menu-item-selected" : "";
     },
     handleLogout() {
-      // Implement the logout functionality
       this.$store.dispatch("LogOut");
     },
   },
@@ -80,7 +79,6 @@ export default {
 }
 
 .menu {
-  flex: 0.9;
   @media (min-width: 600px) {
     flex: 1;
   }
