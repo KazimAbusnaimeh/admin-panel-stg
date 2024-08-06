@@ -2,7 +2,7 @@
   <div>
     <a-layout>
       <a-layout-header class="header">
-        <!-- <div class="header-content" v-if="user">
+        <div class="header-content" v-if="user">
           <a-menu
             theme="dark"
             mode="horizontal"
@@ -22,7 +22,7 @@
           <a-button @click="handleLogout" class="logout-button"
             >Logout</a-button
           >
-        </div> -->
+        </div>
       </a-layout-header>
       <a-layout-content>
         <div class="content-layout">
@@ -71,12 +71,13 @@ export default {
 }*/
 
 .header-content {
+  max-width: 100% !important;
   display: flex;
   align-items: center;
   flex: 1;
   padding: 0 50px;
   @media (max-width: 600px) {
-    padding: 0 0px;
+    padding: 0;
   }
 }
 
