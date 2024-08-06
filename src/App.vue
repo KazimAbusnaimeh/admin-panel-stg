@@ -70,16 +70,16 @@ export default {
   padding: 0 16px;
 }
 
-/*.header-content {
+.header-content {
   max-width: 100% !important;
   display: flex;
   align-items: center;
-  flex: 1;
+  /*flex: 1;*/
   padding: 0 50px;
   @media (max-width: 600px) {
     padding: 0;
   }
-}*/
+}
 
 .menu {
   flex: 1;
