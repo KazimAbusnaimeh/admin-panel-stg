@@ -78,24 +78,19 @@ export default {
   padding: 0 50px;
   @media (max-width: 600px) {
     display: inline-flex !important;
-    padding: 0 10px 0 0 !important;
+    padding: 0 !important;
   }
 }
 
 .menu {
   flex: 1;
   @media (max-width: 600px) {
-    max-width: 10%;
+    max-width: 75%;
   }
 }
 
 .logout-button {
   margin-left: auto;
-  flex: 1;
-  max-width: 100px;
-  @media (max-width: 600px) {
-    max-width: 70px;
-  }
 }
 
 .content-layout {
