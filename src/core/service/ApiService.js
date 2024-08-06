@@ -29,7 +29,7 @@ class ApiService {
     ApiService.vueInstance.axios.interceptors.response.use(
       async (response) => {
         if (
-          store.getters.getUser == null &&
+          !localStorage.getItem("user") &&
           router.currentRoute._value.path !== "/log-in" &&
           router.currentRoute._value.path !== "/register"
         ) {

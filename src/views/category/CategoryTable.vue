@@ -152,18 +152,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.img-container {
-  border-radius: 15px;
-  width: fit-content;
-  overflow: hidden;
-  border: 2px solid var(--primary-color);
-  width: 100px;
-  height: 100px;
-}
-.cover-img {
-  object-fit: fill;
-  width: 100px;
-  height: 100px;
-}
-</style>
+<style scoped></style>

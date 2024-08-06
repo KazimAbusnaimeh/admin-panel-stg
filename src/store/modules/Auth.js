@@ -9,7 +9,8 @@ export default {
   },
   mutations: {
     setUser(state, user) {
-      state.user = user;
+      if (typeof user == "string") state.user = JSON.parse(user);
+      else state.user = user;
       localStorage.setItem("user", user);
     },
     setLoggedOutStatus(state, payload) {

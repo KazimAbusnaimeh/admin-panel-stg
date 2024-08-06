@@ -23,7 +23,7 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'coverImage'">
-          <div class="img-container">
+          <div class="table-img-container">
             <img :src="record.coverImage" alt="cover image" class="cover-img" />
           </div>
         </template>
@@ -141,14 +141,6 @@ export default {
 </script>
 
 <style scoped>
-.img-container {
-  border-radius: 15px;
-  width: fit-content;
-  overflow: hidden;
-  border: 2px solid var(--primary-color);
-  width: 100px;
-  height: 100px;
-}
 .cover-img {
   object-fit: fill;
   width: 100px;
