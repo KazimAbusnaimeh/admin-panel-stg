@@ -74,10 +74,11 @@ export default {
   max-width: 100% !important;
   display: flex;
   align-items: center;
-  /*flex: 1;*/
-  /*padding: 0 50px;*/
+  flex: 1;
+  padding: 0 50px;
   @media (max-width: 600px) {
-    padding: 0;
+    display: inline-flex !important;
+    padding: 0 !important;
   }
 }
 
@@ -87,6 +88,11 @@ export default {
 
 .logout-button {
   margin-left: auto;
+  flex: 1;
+  max-width: 100px;
+  @media (max-width: 600px) {
+    max-width: 70px;
+  }
 }
 
 .content-layout {
