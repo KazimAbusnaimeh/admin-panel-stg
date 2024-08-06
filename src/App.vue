@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout>
-      <!-- <a-layout-header class="header">
+      <a-layout-header>
         <div class="header-content" v-if="user">
           <a-menu
             theme="dark"
@@ -23,7 +23,7 @@
             >Logout</a-button
           >
         </div>
-      </a-layout-header> -->
+      </a-layout-header>
       <a-layout-content>
         <div class="content-layout">
           <RouterView />
@@ -80,9 +80,9 @@ export default {
   }
 }
 
-/*.menu {
+.menu {
   flex: 1;
-}*/
+}
 
 .logout-button {
   margin-left: auto;
