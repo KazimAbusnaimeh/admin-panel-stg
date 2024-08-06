@@ -24,8 +24,10 @@
           >
         </div>
       </a-layout-header>
-      <a-layout-content class="content-layout">
-        <RouterView />
+      <a-layout-content>
+        <div class="content-layout">
+          <RouterView />
+        </div>
       </a-layout-content>
     </a-layout>
   </div>
@@ -78,11 +80,9 @@ export default {
   }
 }
 
-.menu {
-  @media (min-width: 600px) {
-    flex: 1;
-  }
-}
+/*.menu {
+  flex: 1;
+}*/
 
 .logout-button {
   margin-left: auto;
