@@ -61,16 +61,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/*.header {
+.header {
   max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #001529;
   padding: 0 16px;
-}*/
+}
 
-.header-content {
+/*.header-content {
   max-width: 100% !important;
   display: flex;
   align-items: center;
@@ -79,7 +79,7 @@ export default {
   @media (max-width: 600px) {
     padding: 0;
   }
-}
+}*/
 
 .menu {
   flex: 1;
