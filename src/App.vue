@@ -59,8 +59,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,7 +80,10 @@ export default {
 }
 
 .menu {
-  flex: 1;
+  flex: 0.9;
+  @media (min-width: 600px) {
+    flex: 1;
+  }
 }
 
 .logout-button {
@@ -88,10 +92,7 @@ export default {
 
 .content-layout {
   padding: 0 50px;
-}
-
-@media (max-width: 600px) {
-  .content-layout {
+  @media (max-width: 600px) {
     padding: 0 10px;
   }
 }

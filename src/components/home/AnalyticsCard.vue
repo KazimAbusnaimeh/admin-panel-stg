@@ -1,9 +1,7 @@
 <template>
   <div class="analytics-container">
-    <div v-if="loading">
-      <a-skeleton active></a-skeleton>
-      <a-skeleton active></a-skeleton>
-      <a-skeleton active></a-skeleton>
+    <div class="content-container" v-if="loading">
+      <LoadingOutlined class="loading-icon" />
     </div>
     <div style="" class="content-container" v-else>
       <HistoryOutlined class="content-icon" v-if="title == 'Stories'" />
@@ -16,12 +14,20 @@
 </template>
 
 <script>
-import { HistoryOutlined } from "@ant-design/icons-vue";
-import { AppstoreOutlined } from "@ant-design/icons-vue";
-import { ApartmentOutlined } from "@ant-design/icons-vue";
+import {
+  HistoryOutlined,
+  LoadingOutlined,
+  AppstoreOutlined,
+  ApartmentOutlined,
+} from "@ant-design/icons-vue";
 export default {
   props: ["title", "dispatchMethod", "getterMethod"],
-  components: { HistoryOutlined, AppstoreOutlined, ApartmentOutlined },
+  components: {
+    HistoryOutlined,
+    AppstoreOutlined,
+    ApartmentOutlined,
+    LoadingOutlined,
+  },
   data() {
     return {
       loading: false,
@@ -54,6 +60,12 @@ export default {
     h1 {
       font-size: 14px;
     }
+  }
+}
+.loading-icon {
+  font-size: 60px;
+  @media (max-width: 576px) {
+    font-size: 35px;
   }
 }
 .content-icon {
