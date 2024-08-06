@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-layout>
-      <a-layout-header class="header">
+      <!-- <a-layout-header class="header">
         <div class="header-content" v-if="user">
           <a-menu
             theme="dark"
@@ -23,7 +23,7 @@
             >Logout</a-button
           >
         </div>
-      </a-layout-header>
+      </a-layout-header> -->
       <a-layout-content>
         <div class="content-layout">
           <RouterView />
