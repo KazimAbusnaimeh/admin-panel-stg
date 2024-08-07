@@ -19,7 +19,40 @@ h1 {
   margin: 0 auto;
 }
 
+.ant-table {
+  overflow-x: auto;
+}
+
 .ant-card {
-  margin-top: 5%;
+  margin-top: 2%;
   margin-bottom: 5%;
+}
+
+.ant-btn-delete {
+  color: red;
+  padding-left: 0px;
+  .anticon-delete {
+    font-size: 18px;
+    margin-right: -5px;
+  }
+}
+
+.ant-btn-delete:hover {
+  opacity: 0.5;
+}
+
+.ant-btn-edit {
+  color: green;
+  padding-left: 0px;
+  .anticon-form {
+    font-size: 18px;
+    margin-right: -3px;
+  }
+}
+
+.ant-btn-edit:hover {
+  opacity: 0.5;
+}
+.anticon-camera {
+  font-size: 18px;
 }

@@ -16,7 +16,7 @@
       </div></template
     >
     <a-table
-      :columns="tableHeader"
+      :columns="columnsWithDynamicWidth"
       :data-source="tableData"
       rowKey="id"
       :customRow="customRow"
@@ -24,23 +24,43 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'coverImage'">
           <div class="table-img-container">
-            <img :src="record.coverImage" alt="cover image" class="cover-img" />
+            <img :src="record.coverImage" alt="cover image" />
           </div>
         </template>
         <template v-else-if="column.key === 'title'">
           <div>{{ record.title }}</div>
         </template>
         <template v-else-if="column.key === 'storyContent'">
-          <div>
-            {{ record.storyContent.length }}
+          <div style="display: flex">
+            <div
+              style="display: inline-block"
+              class="table-img-container"
+              v-for="image in record.storyContent"
+              :key="image"
+            >
+              <img :src="image" alt="cover image" />
+            </div>
           </div>
         </template>
         <template v-else-if="column.key === 'action'">
-          <a-tooltip :title="'Delete ' + ' Story'" color="red">
-            <DeleteOutlined
-              style="font-size: 18px"
-              @click="deleteStory(record._id)"
-          /></a-tooltip>
+          <div style="display: flex">
+            <a-button
+              @click="(currentStory = record), (showStory = true)"
+              type="link"
+              style="padding-left: 0"
+            >
+              <CameraOutlined style="margin-right: -3px" />Images
+            </a-button>
+            <a-button
+              @click="this.$router.push(`/story-form?storyId=${record._id}`)"
+              type="edit"
+            >
+              <FormOutlined />Edit
+            </a-button>
+            <a-button @click="deleteStory(record._id)" type="delete">
+              <DeleteOutlined />Delete
+            </a-button>
+          </div>
         </template>
       </template>
     </a-table>
@@ -54,8 +74,12 @@
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
-import { successMessage } from "@/utils/Extentions";
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import { successMessage, getColumnsWithDynamicWidth } from "@/utils/Extentions";
+import {
+  DeleteOutlined,
+  FormOutlined,
+  CameraOutlined,
+} from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
 const tableHeader = [
   {
@@ -69,7 +93,7 @@ const tableHeader = [
     key: "title",
   },
   {
-    title: "Number of Story images",
+    title: "Story images",
     dataIndex: "storyContent",
     key: "storyContent",
   },
@@ -79,9 +103,13 @@ const tableHeader = [
     key: "action",
   },
 ];
-
 export default {
-  components: { StoryContentView, DeleteOutlined },
+  components: {
+    StoryContentView,
+    DeleteOutlined,
+    FormOutlined,
+    CameraOutlined,
+  },
   data() {
     return {
       tableHeader,
@@ -90,6 +118,11 @@ export default {
       currentStory: {},
       showStory: false,
     };
+  },
+  computed: {
+    columnsWithDynamicWidth() {
+      return getColumnsWithDynamicWidth(this.tableHeader);
+    },
   },
   methods: {
     deleteStory(id) {
@@ -115,15 +148,9 @@ export default {
     },
     customRow(record) {
       return {
-        style: {
-          cursor: "pointer",
-        },
+        style: {},
         onClick: (event) => {
-          const tagName = event.target.tagName;
-          if (tagName != "svg") {
-            this.currentStory = record;
-            this.showStory = true;
-          }
+          const tagName = event.target.tagName.toLowerCase();
         },
       };
     },
@@ -140,10 +167,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.cover-img {
-  object-fit: fill;
-  width: 100px;
-  height: 100px;
-}
-</style>
+<style scoped></style>

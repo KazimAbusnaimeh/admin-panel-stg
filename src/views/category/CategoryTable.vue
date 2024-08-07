@@ -23,7 +23,7 @@
       </div></template
     >
     <a-table
-      :columns="tableHeader"
+      :columns="columnsWithDynamicWidth"
       :data-source="tableData"
       rowKey="id"
       :customRow="customRow"
@@ -38,12 +38,14 @@
           </div>
         </template>
         <template v-else-if="column.key === 'action'">
-          <a-tooltip :title="'Delete Category'" color="red">
-            <DeleteOutlined
-              style="font-size: 18px"
-              @click="deleteStory(record._id)"
-            />
-          </a-tooltip>
+          <div style="display: flex">
+            <a-button @click="editCategory(record)" type="edit">
+              <FormOutlined />Edit
+            </a-button>
+            <a-button @click="deleteCategory(record._id)" type="delete">
+              <DeleteOutlined />Delete
+            </a-button>
+          </div>
         </template>
       </template>
     </a-table>
@@ -61,10 +63,10 @@
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
 import CategoryAndTypeOfWorkModal from "@/components/modals/CategoryAndTypeOfWorkModal.vue";
-import { successMessage } from "@/utils/Extentions";
+import { successMessage, getColumnsWithDynamicWidth } from "@/utils/Extentions";
 const tableHeader = [
   {
     title: "Name",
@@ -84,7 +86,12 @@ const tableHeader = [
 ];
 
 export default {
-  components: { StoryContentView, DeleteOutlined, CategoryAndTypeOfWorkModal },
+  components: {
+    StoryContentView,
+    DeleteOutlined,
+    FormOutlined,
+    CategoryAndTypeOfWorkModal,
+  },
   data() {
     return {
       tableHeader,
@@ -95,8 +102,13 @@ export default {
       dispatchMethod: "",
     };
   },
+  computed: {
+    columnsWithDynamicWidth() {
+      return getColumnsWithDynamicWidth(this.tableHeader);
+    },
+  },
   methods: {
-    async deleteStory(id) {
+    async deleteCategory(id) {
       Swal.fire({
         icon: "warning",
         title: "Are You Sure",
@@ -124,18 +136,16 @@ export default {
         this.loadPageData()
       );
     },
+    editCategory(record) {
+      this.currentCategory = record;
+      this.dispatchMethod = "updateCategory";
+      this.showCategoryFormModal = true;
+    },
     customRow(record) {
       return {
-        style: {
-          cursor: "pointer",
-        },
+        style: {},
         onClick: (event) => {
           const tagName = event.target.tagName;
-          if (tagName != "svg") {
-            this.currentCategory = record;
-            this.dispatchMethod = "updateCategory";
-            this.showCategoryFormModal = true;
-          }
         },
       };
     },

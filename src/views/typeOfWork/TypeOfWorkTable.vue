@@ -31,11 +31,7 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'typeImage'">
           <div class="table-img-container">
-            <img
-              :src="tableData[0].typeImage"
-              alt="type image"
-              class="type-img"
-            />
+            <img :src="tableData[0].typeImage" alt=" image" class="type-img" />
           </div>
         </template>
         <template v-if="column.key === 'title'">
@@ -47,12 +43,14 @@
           </div>
         </template>
         <template v-else-if="column.key === 'action'">
-          <a-tooltip :title="'Delete Type Of Work'" color="red">
-            <DeleteOutlined
-              style="font-size: 18px"
-              @click="deleteStory(record._id)"
-            />
-          </a-tooltip>
+          <div style="display: flex">
+            <a-button @click="editTypeOfWork(record)" type="edit">
+              <FormOutlined />Edit
+            </a-button>
+            <a-button @click="deleteCategory(record._id)" type="delete">
+              <DeleteOutlined />Delete
+            </a-button>
+          </div>
         </template>
       </template>
     </a-table>
@@ -70,7 +68,7 @@
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
 import CategoryAndTypeOfWorkModal from "@/components/modals/CategoryAndTypeOfWorkModal.vue";
 import { successMessage } from "@/utils/Extentions";
@@ -94,7 +92,12 @@ const tableHeader = [
 ];
 
 export default {
-  components: { StoryContentView, DeleteOutlined, CategoryAndTypeOfWorkModal },
+  components: {
+    StoryContentView,
+    DeleteOutlined,
+    FormOutlined,
+    CategoryAndTypeOfWorkModal,
+  },
   data() {
     return {
       tableHeader,
@@ -134,18 +137,16 @@ export default {
         this.loadPageData()
       );
     },
+    editTypeOfWork(record) {
+      this.currentTypeOfWork = record;
+      this.dispatchMethod = "updateTypeOfWork";
+      this.showTypeOfWorkFormModal = true;
+    },
     customRow(record) {
       return {
-        style: {
-          cursor: "pointer",
-        },
+        style: {},
         onClick: (event) => {
           const tagName = event.target.tagName;
-          if (tagName != "svg") {
-            this.currentTypeOfWork = record;
-            this.dispatchMethod = "updateTypeOfWork";
-            this.showTypeOfWorkFormModal = true;
-          }
         },
       };
     },

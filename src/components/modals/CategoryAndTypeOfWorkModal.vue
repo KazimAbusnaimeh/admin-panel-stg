@@ -105,7 +105,11 @@ export default {
   },
   watch: {
     showModal(val) {
-      this.form.categoryName = this.currentItem?.categoryName;
+      this.form.categoryName =
+        this.currentItem?.categoryName || this.currentItem?.typeName;
+      this.form.typeImage = this.currentItem?.typeImage
+        ? [this.currentItem?.typeImage]
+        : [];
       this.submitLoading = false;
       this.localShowModal = val;
     },

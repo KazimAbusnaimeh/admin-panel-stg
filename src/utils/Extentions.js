@@ -40,3 +40,13 @@ export function successMessage(type, name, callback = () => {}) {
     }
   });
 }
+
+export function getColumnsWithDynamicWidth(tableHeader) {
+  const numberOfColumns = tableHeader.length;
+  const columnWidth = `${100 / numberOfColumns}vh`;
+
+  return tableHeader.map((column) => ({
+    ...column,
+    width: columnWidth,
+  }));
+}
