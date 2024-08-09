@@ -49,9 +49,8 @@
           :show-upload-list="false"
         >
           <a-button type="primary" ghost @click="imageType = 'cover'">
-            <UploadOutlined style="font-size: 20px" />{{
-              form.typeImage.length ? "Change" : "Upload"
-            }}
+            <span class="upload-icon"><Icon type="upload" /></span>
+            {{ form.typeImage.length ? "Change" : "Upload" }}
             Image
           </a-button>
         </a-upload>
@@ -79,8 +78,8 @@
 </template>
 
 <script>
+import Icon from "../common/Icon.vue";
 import ImageViewer from "@/components/common/ImageViewer.vue";
-import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 
@@ -92,7 +91,7 @@ export default {
     "dispatchMethod",
     "isCreate",
   ],
-  components: { Cropper, UploadOutlined, ImageViewer },
+  components: { Cropper, Icon, ImageViewer },
   data() {
     return {
       localShowModal: false,

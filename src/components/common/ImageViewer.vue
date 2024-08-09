@@ -10,9 +10,9 @@
           <p class="image-name">
             {{ `image-${index + 1}` }}
           </p>
-          <DeleteOutlined
+          <Icon
             v-if="removable"
-            type="primary"
+            type="delete"
             ghost
             @click="handleRemove(index)"
             class="remove-button"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { DeleteOutlined } from "@ant-design/icons-vue";
+import Icon from "./Icon.vue";
 export default {
   props: {
     previewImagesList: Array,
@@ -34,7 +34,7 @@ export default {
       default: true,
     },
   },
-  components: { DeleteOutlined },
+  components: { Icon },
   methods: {
     handleRemove(index) {
       this.$emit("image-remove", index);
@@ -72,6 +72,7 @@ export default {
     max-width: 70%;
   }
   .remove-button {
+    cursor: pointer;
     margin-top: 10px;
     font-size: 16px;
   }

@@ -8,18 +8,26 @@
   </div>
   <a-card v-else>
     <template #title>
-      <div class="d-flex ai-center jc-space-between">
-        <h1>Stories Table</h1>
-        <a-button type="link">
-          <router-link to="/story-form">Create Story</router-link></a-button
-        >
-      </div></template
-    >
+      <h1>Stories Table</h1>
+    </template>
+    <div class="d-flex ai-center jc-space-between" style="margin-bottom: 20px">
+      <a-button type="primary" ghost>
+        <router-link to="/story-form">Add Story</router-link></a-button
+      >
+      <a-input-search
+        v-model:value="searchInput"
+        placeholder="Search Story"
+        style="max-width: 30%"
+        enter-button
+        @search="onSearch"
+      />
+    </div>
     <a-table
       :columns="columnsWithDynamicWidth"
       :data-source="tableData"
       rowKey="id"
       :customRow="customRow"
+      :pagination="{ pageSize: 3 }"
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'coverImage'">
@@ -49,16 +57,16 @@
               type="link"
               style="padding-left: 0"
             >
-              <CameraOutlined style="margin-right: -3px" />Images
+              <icon type="camera" style="margin-right: -3px" />Images
             </a-button>
             <a-button
               @click="this.$router.push(`/story-form?storyId=${record._id}`)"
               type="edit"
             >
-              <FormOutlined />Edit
+              <icon type="form" />Edit
             </a-button>
             <a-button @click="deleteStory(record._id)" type="delete">
-              <DeleteOutlined />Delete
+              <icon type="delete" /> Delete
             </a-button>
           </div>
         </template>
@@ -75,12 +83,8 @@
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
 import { successMessage, getColumnsWithDynamicWidth } from "@/utils/Extentions";
-import {
-  DeleteOutlined,
-  FormOutlined,
-  CameraOutlined,
-} from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
+import Icon from "@/components/common/Icon.vue";
 const tableHeader = [
   {
     title: "Cover Image",
@@ -106,9 +110,7 @@ const tableHeader = [
 export default {
   components: {
     StoryContentView,
-    DeleteOutlined,
-    FormOutlined,
-    CameraOutlined,
+    Icon,
   },
   data() {
     return {

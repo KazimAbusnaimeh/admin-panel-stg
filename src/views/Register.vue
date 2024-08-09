@@ -72,9 +72,8 @@
             :show-upload-list="false"
           >
             <a-button type="default">
-              <UploadOutlined style="font-size: 20px" />{{
-                userImage.length ? "Change" : "Upload"
-              }}
+              <span class="upload-icon"><Icon type="upload" /></span
+              >{{ userImage.length ? "Change" : "Upload" }}
               Image
             </a-button>
           </a-upload>
@@ -117,12 +116,12 @@
 <script>
 import ImageViewer from "@/components/common/ImageViewer.vue";
 import { nameValidateError, inputName } from "../utils/Extentions";
-import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
+import Icon from "@/components/common/Icon.vue";
 
 export default {
-  components: { Cropper, UploadOutlined, ImageViewer },
+  components: { Cropper, Icon, ImageViewer },
   data() {
     return {
       submitLoading: false,

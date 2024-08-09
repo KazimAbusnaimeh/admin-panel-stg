@@ -4,9 +4,15 @@
       <LoadingOutlined class="loading-icon" />
     </div>
     <div style="" class="content-container" v-else>
-      <HistoryOutlined class="content-icon" v-if="title == 'Stories'" />
-      <AppstoreOutlined class="content-icon" v-if="title == 'Categories'" />
-      <ApartmentOutlined class="content-icon" v-if="title == 'Type Of Work'" />
+      <div class="content-icon" v-if="title == 'Stories'">
+        <Icon type="camera" />
+      </div>
+      <div class="content-icon" v-if="title == 'Categories'">
+        <Icon type="appstore" />
+      </div>
+      <div class="content-icon" v-if="title == 'Type Of Work'">
+        <Icon type="apartment" />
+      </div>
       <h2 style="text-align: center">{{ title }} :</h2>
       <h1 style="text-align: center">{{ itemsNumber }}</h1>
     </div>
@@ -14,20 +20,11 @@
 </template>
 
 <script>
-import {
-  HistoryOutlined,
-  LoadingOutlined,
-  AppstoreOutlined,
-  ApartmentOutlined,
-} from "@ant-design/icons-vue";
+import Icon from "../common/Icon.vue";
+
 export default {
   props: ["title", "dispatchMethod", "getterMethod"],
-  components: {
-    HistoryOutlined,
-    AppstoreOutlined,
-    ApartmentOutlined,
-    LoadingOutlined,
-  },
+  components: { Icon },
   data() {
     return {
       loading: false,

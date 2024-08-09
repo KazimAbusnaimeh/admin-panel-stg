@@ -26,6 +26,11 @@ h1 {
 .ant-card {
   margin-top: 2%;
   margin-bottom: 5%;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  background-color: #fff;
 }
 
 .ant-btn-delete {
@@ -53,6 +58,16 @@ h1 {
 .ant-btn-edit:hover {
   opacity: 0.5;
 }
-.anticon-camera {
-  font-size: 18px;
+
+.ant-btn-link {
+  .anticon-camera {
+    font-size: 18px;
+    margin-right: -3px;
+  }
+}
+
+.ant-layout-sider-children {
+  .ant-menu {
+    max-width: 100% !important;
+  }
 }

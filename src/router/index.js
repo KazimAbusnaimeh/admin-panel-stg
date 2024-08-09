@@ -18,18 +18,24 @@ export const routes = [
     path: "/home",
     name: "home",
     showInHeader: true,
+    isLocal: true,
+    icon: "home",
     component: () => import("../views/Home.vue"),
   },
   {
     path: "/story-table",
     name: "story",
     showInHeader: true,
+    isLocal: true,
+    icon: "camera",
     component: () => import("../views/story/StoryTable.vue"),
   },
   {
     path: "/category-table",
     name: "category",
     showInHeader: true,
+    isLocal: true,
+    icon: "appstore",
     component: () => import("../views/category/CategoryTable.vue"),
   },
   {
@@ -42,6 +48,8 @@ export const routes = [
     path: "/type-of-work-table",
     name: "type of work",
     showInHeader: true,
+    isLocal: true,
+    icon: "apartment",
     component: () => import("../views/typeOfWork/TypeOfWorkTable.vue"),
   },
 ];

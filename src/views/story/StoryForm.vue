@@ -82,7 +82,8 @@
           :show-upload-list="false"
         >
           <a-button type="primary" ghost @click="imageType = 'content'">
-            <UploadOutlined style="font-size: 20px" />{{
+            <span class="upload-icon"><Icon type="upload" /></span
+            >{{
               !isContentImageUpdated && storyId
                 ? "Replace Images"
                 : "Upload Image"
@@ -116,13 +117,12 @@
 
 <script>
 import ImageViewer from "../../components/common/ImageViewer.vue";
-import { UploadOutlined } from "@ant-design/icons-vue";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
-import Swal from "sweetalert2";
 import { successMessage } from "@/utils/Extentions";
+import Icon from "@/components/common/Icon.vue";
 export default {
-  components: { UploadOutlined, Cropper, ImageViewer },
+  components: { Cropper, ImageViewer, Icon },
   data() {
     return {
       storyId: this.$route.query?.storyId,

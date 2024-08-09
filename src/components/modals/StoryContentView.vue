@@ -10,11 +10,9 @@
     }"
   >
     <div class="modal-content-container">
-      <CaretLeftOutlined
-        class="arrow"
-        @click="slideLeft"
-        v-if="!isSmallScreen"
-      />
+      <div class="arrow" v-if="!isSmallScreen" @click="slideLeft">
+        <Icon type="leftArrow" />
+      </div>
       <div class="story-content-wrapper" ref="imageContainer">
         <div class="story-content" v-for="img in story.storyContent" :key="img">
           <img
@@ -27,11 +25,9 @@
         </div>
       </div>
       <div>
-        <CaretRightOutlined
-          class="arrow"
-          @click="slideRight"
-          v-if="!isSmallScreen"
-        />
+        <div class="arrow" v-if="!isSmallScreen" @click="slideRight">
+          <Icon type="rightArrow" />
+        </div>
       </div>
     </div>
     <template #footer>
@@ -76,12 +72,11 @@
 </template>
 
 <script>
-import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons-vue";
+import Icon from "../common/Icon.vue";
 export default {
   props: ["showModal", "story"],
   components: {
-    CaretRightOutlined,
-    CaretLeftOutlined,
+    Icon,
   },
   data() {
     return {

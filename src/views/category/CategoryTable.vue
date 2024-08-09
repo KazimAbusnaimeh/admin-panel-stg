@@ -40,10 +40,10 @@
         <template v-else-if="column.key === 'action'">
           <div style="display: flex">
             <a-button @click="editCategory(record)" type="edit">
-              <FormOutlined />Edit
+              <Icon type="form" />Edit
             </a-button>
             <a-button @click="deleteCategory(record._id)" type="delete">
-              <DeleteOutlined />Delete
+              <Icon type="delete" /> Delete
             </a-button>
           </div>
         </template>
@@ -63,10 +63,10 @@
 
 <script>
 import StoryContentView from "@/components/modals/StoryContentView.vue";
-import { DeleteOutlined, FormOutlined } from "@ant-design/icons-vue";
 import Swal from "sweetalert2";
 import CategoryAndTypeOfWorkModal from "@/components/modals/CategoryAndTypeOfWorkModal.vue";
 import { successMessage, getColumnsWithDynamicWidth } from "@/utils/Extentions";
+import Icon from "@/components/common/Icon.vue";
 const tableHeader = [
   {
     title: "Name",
@@ -88,8 +88,7 @@ const tableHeader = [
 export default {
   components: {
     StoryContentView,
-    DeleteOutlined,
-    FormOutlined,
+    Icon,
     CategoryAndTypeOfWorkModal,
   },
   data() {
